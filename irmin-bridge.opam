@@ -13,6 +13,7 @@ depends: [
   "yojson" {>= "2.0.0"}
   "lwt" {>= "5.0.0"}
   "cmdliner" {>= "1.1.0"}
+  "cohttp-lwt-unix" {>= "5.0.0"}
 ]
 build: [
   ["dune" "subst"] {dev}
