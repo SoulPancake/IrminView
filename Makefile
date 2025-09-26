@@ -1,13 +1,82 @@
-# Makefile for IrminView Docker Setup
+# Makefile for IrminView Docker Setup and Desktop App
 
-.PHONY: help build up down logs test demo-data clean dev
+.PHONY: help build up down logs test demo-data clean dev run-app build-app install-deps
 
 # Default target
 help: ## Show this help message
-	@echo "🧬 IrminView Docker Commands"
+	@echo "🧬 IrminView Commands"
 	@echo ""
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+	@echo "Desktop App Commands:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | grep -E "(run-app|build-app|install-deps)" | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
+	@echo ""
+	@echo "Docker Commands:"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | grep -v -E "(run-app|build-app|install-deps)" | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
+# Desktop App Commands
+install-deps: ## Install system dependencies for desktop app
+	@echo "📦 Installing system dependencies..."
+	@if command -v apt-get >/dev/null 2>&1; then \
+		echo "Installing dependencies on Ubuntu/Debian..."; \
+		sudo apt-get update && sudo apt-get install -y \
+			pkg-config libssl-dev libgtk-3-dev libglib2.0-dev \
+			libwebkit2gtk-4.1-dev libjavascriptcoregtk-4.1-dev libsoup-3.0-dev \
+			build-essential curl; \
+	elif command -v brew >/dev/null 2>&1; then \
+		echo "Installing dependencies on macOS..."; \
+		brew install pkg-config openssl gtk+3; \
+	else \
+		echo "❌ Unsupported system. Please install dependencies manually."; \
+		exit 1; \
+	fi
+	@echo "✅ System dependencies installed!"
+
+build-app: ## Build the desktop application
+	@echo "🔨 Building IrminView desktop application..."
+	@cd src-tauri && \
+		export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig && \
+		cargo build --release
+	@echo "✅ Desktop application built successfully!"
+	@echo "📍 Binary location: src-tauri/target/release/irmin-view"
+
+run-app: ## Run the desktop application (with fallback to demo data)
+	@echo "🚀 Starting IrminView desktop application..."
+	@echo "ℹ️  Using demo data fallback (no Irmin server required)"
+	@cd src-tauri && \
+		export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig && \
+		export IRMIN_USE_HTTP=false && \
+		cargo run
+	@echo "✅ Desktop application started!"
+
+run-app-http: ## Run desktop app connected to HTTP server
+	@echo "🚀 Starting IrminView with HTTP server connection..."
+	@echo "ℹ️  Make sure Irmin server is running: make up"
+	@cd src-tauri && \
+		export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig && \
+		export IRMIN_USE_HTTP=true && \
+		export IRMIN_SERVER_URL=http://localhost:8080 && \
+		cargo run
+	@echo "✅ Desktop application started with HTTP backend!"
+
+dev-app: ## Run desktop app in development mode with hot reload
+	@echo "🛠️ Starting IrminView in development mode..."
+	@cd src-tauri && \
+		export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig && \
+		export RUST_LOG=debug && \
+		cargo run
+
+# Combined commands
+full-stack: up run-app-http ## Start Irmin server and desktop app together
+	@echo "🎉 Full stack started!"
+
+complete-setup: install-deps demo-data build up build-app ## Complete setup: install deps, create demo data, start server, build app
+	@echo ""
+	@echo "🎉 Complete setup finished!"
+	@echo ""
+	@echo "🖥️  To run desktop app (standalone): make run-app"  
+	@echo "🌐 To run with server backend: make run-app-http"
+	@echo "🐳 To manage Docker: make help"
+
+# Docker Commands
 build: ## Build all Docker images
 	@echo "🔨 Building Docker images..."
 	docker-compose build
