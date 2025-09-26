@@ -3,16 +3,20 @@ const invoke = window.__TAURI__ ? window.__TAURI__.core.invoke : async (cmd, arg
     console.log(`Mock invoke: ${cmd}`, args);
     // Mock responses for development without Tauri
     switch (cmd) {
-        case 'get_mock_tree':
+        case 'get_tree':
             return mockTreeData();
-        case 'get_mock_commits':
+        case 'get_commits':
             return mockCommitsData();
-        case 'get_mock_branches':
+        case 'get_branches':
             return mockBranchesData();
         case 'search_keys':
             return mockSearchResults(args.query);
         case 'get_commit_diff':
             return mockDiffData(args.from_commit, args.to_commit);
+        case 'connect_to_irmin_store':
+            return "Connected to mock Irmin store";
+        case 'check_irmin_availability':
+            return false;
         default:
             return null;
     }
@@ -66,9 +70,13 @@ function initializeEventListeners() {
 // Load initial data
 async function loadInitialData() {
     try {
-        treeData = await invoke('get_mock_tree');
-        commitsData = await invoke('get_mock_commits');
-        branchesData = await invoke('get_mock_branches');
+        // Check if Irmin integration is available
+        const irminAvailable = await invoke('check_irmin_availability');
+        console.log('Irmin integration available:', irminAvailable);
+        
+        treeData = await invoke('get_tree');
+        commitsData = await invoke('get_commits');
+        branchesData = await invoke('get_branches');
         
         // Populate commit selects
         populateCommitSelects();

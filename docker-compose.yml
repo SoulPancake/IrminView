@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # Irmin Bridge Server
+  irmin-server:
+    build:
+      context: .
+      dockerfile: docker/irmin-server/Dockerfile
+    container_name: irmin-bridge-server
+    ports:
+      - "8080:8080"
+    environment:
+      - IRMIN_PORT=8080
+      - IRMIN_STORE_PATH=/data/irmin_store
+    volumes:
+      # Persistent volume for Irmin store data
+      - irmin-data:/home/opam/data/irmin_store
+      # Optional: Mount a local Irmin store
+      # - ./my-irmin-store:/home/opam/data/irmin_store
+    networks:
+      - irmin-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # IrminView Desktop Application (for headless testing)
+  irminview:
+    build:
+      context: .
+      dockerfile: docker/irminview/Dockerfile
+    container_name: irminview-app
+    environment:
+      - IRMIN_USE_HTTP=true
+      - IRMIN_SERVER_URL=http://irmin-server:8080
+      - DISPLAY=:99
+    depends_on:
+      irmin-server:
+        condition: service_healthy
+    networks:
+      - irmin-network
+    profiles:
+      # This service is optional and only runs when explicitly requested
+      - testing
+
+  # Optional: Web-based Irmin Store Initializer
+  irmin-init:
+    build:
+      context: .
+      dockerfile: docker/irmin-server/Dockerfile
+    container_name: irmin-initializer
+    environment:
+      - IRMIN_STORE_PATH=/data/irmin_store
+    volumes:
+      - irmin-data:/home/opam/data/irmin_store
+    networks:
+      - irmin-network
+    command: >
+      sh -c "
+        eval $$(opam env) &&
+        echo 'Initializing Irmin store with demo data...' &&
+        mkdir -p /home/opam/data/irmin_store &&
+        cd /home/opam/data/irmin_store &&
+        git init . &&
+        echo 'Demo Irmin Store initialized.' &&
+        echo 'You can now use the Irmin Bridge Server!'
+      "
+    profiles:
+      - init
+
+volumes:
+  irmin-data:
+    driver: local
+
+networks:
+  irmin-network:
+    driver: bridge

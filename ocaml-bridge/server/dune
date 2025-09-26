@@ -1,0 +1,4 @@
+(executable
+ (public_name irmin-bridge-server)
+ (name server)
+ (libraries irmin_bridge lwt.unix cohttp-lwt-unix))

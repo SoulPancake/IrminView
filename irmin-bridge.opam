@@ -1,0 +1,21 @@
+opam-version: "2.0"
+name: "irmin-bridge"
+version: "0.1.0"
+maintainer: "IrminView Team"
+author: "IrminView Team"
+synopsis: "OCaml bridge for IrminView application"
+depends: [
+  "ocaml" {>= "4.14.0"}
+  "dune" {>= "3.0"}
+  "irmin" {>= "3.0.0"}
+  "irmin-fs" {>= "3.0.0"}
+  "irmin-git" {>= "3.0.0"}
+  "yojson" {>= "2.0.0"}
+  "lwt" {>= "5.0.0"}
+  "cmdliner" {>= "1.1.0"}
+  "cohttp-lwt-unix" {>= "5.0.0"}
+]
+build: [
+  ["dune" "subst"] {dev}
+  ["dune" "build" "-p" name "-j" jobs]
+]

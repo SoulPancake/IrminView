@@ -23,11 +23,7 @@ A **cross-platform desktop UI application** for interacting with and visualizing
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- [Rust](https://rustup.rs/) (1.70 or later)
-- [Node.js](https://nodejs.org/) (for frontend development)
-
-### Development Setup
+### Method 1: Using Makefile (Recommended)
 
 1. **Clone the repository**
    ```bash
@@ -35,22 +31,49 @@ A **cross-platform desktop UI application** for interacting with and visualizing
    cd IrminView
    ```
 
+2. **Install dependencies and run the desktop app**
+   ```bash
+   # Install system dependencies automatically
+   make install-deps
+   
+   # Run the desktop application (uses demo data by default)
+   make run-app
+   ```
+
+3. **Alternative: Full setup with server backend**
+   ```bash
+   # Complete setup: dependencies + demo data + server + app build
+   make complete-setup
+   
+   # Run with server backend
+   make run-app-http
+   ```
+
+### Method 2: Manual Setup
+
+1. **Prerequisites**
+   - [Rust](https://rustup.rs/) (1.70 or later)
+   - System dependencies: `pkg-config`, `libgtk-3-dev`, `libwebkit2gtk-4.1-dev`
+
 2. **Build and run in development mode**
    ```bash
    cd src-tauri
-   cargo tauri dev
+   cargo run
    ```
-
-   This will:
-   - Compile the Rust backend
-   - Launch the desktop application
-   - Enable hot-reload for development
 
 3. **Build for production**
    ```bash
    cd src-tauri
-   cargo tauri build
+   cargo build --release
    ```
+
+### Available Makefile Commands
+
+- `make run-app` - Run desktop app with demo data (no server needed)
+- `make run-app-http` - Run desktop app connected to Irmin server
+- `make build-app` - Build desktop application for production
+- `make install-deps` - Install system dependencies
+- `make help` - Show all available commands
 
 ## 🏗️ Architecture
 
