@@ -1,0 +1,37 @@
+[package]
+name = "irmin-view"
+version = "0.1.0"
+edition = "2021"
+description = "A cross-platform desktop UI application for exploring Irmin DB stores"
+authors = ["Irmin View Team"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/SoulPancake/IrminView"
+
+[dependencies]
+# Tauri dependencies
+tauri = { version = "2.0", features = [] }
+tauri-plugin-shell = "2.0"
+tauri-plugin-fs = "2.0"
+tauri-plugin-dialog = "2.0"
+
+# Core dependencies
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.0", features = ["full"] }
+anyhow = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Async runtime
+futures = "0.3"
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[[bin]]
+name = "irmin-view"
+path = "src/main.rs"
+
+[lib]
+name = "irmin_view"
+path = "src/lib.rs"

@@ -1,0 +1,88 @@
+{
+  "title": "Demo Branch Structure",
+  "description": "Example branches showing different development workflows and merge scenarios",
+  "branches": [
+    {
+      "name": "main",
+      "head_commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "last_updated": "2024-01-15T14:30:00Z",
+      "commit_count": 15,
+      "description": "Main production branch with stable releases",
+      "protected": true,
+      "default": true,
+      "commits_ahead": 0,
+      "commits_behind": 0
+    },
+    {
+      "name": "develop",
+      "head_commit": "c3d4e5f6a1b2789012345678901234567890cdef",
+      "last_updated": "2024-01-15T16:45:00Z",
+      "commit_count": 12,
+      "description": "Development branch for feature integration",
+      "protected": true,
+      "default": false,
+      "commits_ahead": 3,
+      "commits_behind": 1
+    },
+    {
+      "name": "feature/authentication",
+      "head_commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "last_updated": "2024-01-15T14:30:00Z",
+      "commit_count": 8,
+      "description": "User authentication and authorization system",
+      "protected": false,
+      "default": false,
+      "commits_ahead": 0,
+      "commits_behind": 0,
+      "merge_status": "merged"
+    },
+    {
+      "name": "feature/logging",
+      "head_commit": "d4c3b2a1f6e5890123456789012345678901fedc",
+      "last_updated": "2024-01-15T11:20:00Z",
+      "commit_count": 5,
+      "description": "Comprehensive logging and monitoring system",
+      "protected": false,
+      "default": false,
+      "commits_ahead": 2,
+      "commits_behind": 3,
+      "merge_status": "ready_for_review"
+    },
+    {
+      "name": "feature/rate-limiting",
+      "head_commit": "e5f4c3d2a1b0123456789012345678901234abef",
+      "last_updated": "2024-01-15T09:30:00Z",
+      "commit_count": 3,
+      "description": "API rate limiting and throttling implementation",
+      "protected": false,
+      "default": false,
+      "commits_ahead": 1,
+      "commits_behind": 4,
+      "merge_status": "in_progress"
+    },
+    {
+      "name": "hotfix/memory-leak",
+      "head_commit": "9876543210abcdef0123456789abcdef01234567",
+      "last_updated": "2024-01-15T13:10:00Z",
+      "commit_count": 2,
+      "description": "Critical fix for memory leak in tree traversal",
+      "protected": false,
+      "default": false,
+      "commits_ahead": 1,
+      "commits_behind": 0,
+      "merge_status": "urgent"
+    },
+    {
+      "name": "release/v2.1.0",
+      "head_commit": "f1e2d3c4b5a6987654321098765432109876fedc",
+      "last_updated": "2024-01-14T18:00:00Z",
+      "commit_count": 18,
+      "description": "Release preparation for version 2.1.0",
+      "protected": true,
+      "default": false,
+      "commits_ahead": 0,
+      "commits_behind": 2,
+      "merge_status": "released"
+    }
+  ]
+}

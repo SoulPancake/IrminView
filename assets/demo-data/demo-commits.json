@@ -1,0 +1,150 @@
+{
+  "title": "Demo Commit History",
+  "description": "A comprehensive example of Irmin commit history with multiple branches and realistic development scenarios",
+  "commits": [
+    {
+      "hash": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "message": "Add user authentication system",
+      "author": "Alice Johnson <alice@company.com>",
+      "timestamp": "2024-01-15T14:30:00Z",
+      "parents": ["f6e5d4c3b2a1987654321098765432109876dcba"],
+      "branch": "main",
+      "changes": [
+        {
+          "path": "/auth/users.json",
+          "type": "added",
+          "additions": 45,
+          "deletions": 0
+        },
+        {
+          "path": "/config/auth.json", 
+          "type": "added",
+          "additions": 23,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "hash": "f6e5d4c3b2a1987654321098765432109876dcba",
+      "message": "Update database configuration schema",
+      "author": "Bob Smith <bob@company.com>",
+      "timestamp": "2024-01-15T10:15:00Z",
+      "parents": ["b2a1f6e5d4c3456789012345678901234567cdef"],
+      "branch": "main",
+      "changes": [
+        {
+          "path": "/config/database.json",
+          "type": "modified",
+          "additions": 12,
+          "deletions": 8
+        },
+        {
+          "path": "/schemas/db-schema.json",
+          "type": "added",
+          "additions": 67,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "hash": "b2a1f6e5d4c3456789012345678901234567cdef",
+      "message": "Initial project structure and configuration",
+      "author": "Charlie Brown <charlie@company.com>",
+      "timestamp": "2024-01-14T16:45:00Z",
+      "parents": [],
+      "branch": "main",
+      "changes": [
+        {
+          "path": "/README.md",
+          "type": "added",
+          "additions": 34,
+          "deletions": 0
+        },
+        {
+          "path": "/config/app.json",
+          "type": "added",
+          "additions": 18,
+          "deletions": 0
+        },
+        {
+          "path": "/.gitignore",
+          "type": "added",
+          "additions": 15,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "hash": "d4c3b2a1f6e5890123456789012345678901fedc",
+      "message": "Add comprehensive logging system",
+      "author": "Diana Prince <diana@company.com>",
+      "timestamp": "2024-01-15T11:20:00Z",
+      "parents": ["a1b2c3d4e5f6789012345678901234567890abcd"],
+      "branch": "feature/logging",
+      "changes": [
+        {
+          "path": "/logs/app.log",
+          "type": "added",
+          "additions": 156,
+          "deletions": 0
+        },
+        {
+          "path": "/logs/error.log",
+          "type": "added",
+          "additions": 89,
+          "deletions": 0
+        },
+        {
+          "path": "/config/logging.json",
+          "type": "added",
+          "additions": 42,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "hash": "e5f4c3d2a1b0123456789012345678901234abef",
+      "message": "Implement API rate limiting",
+      "author": "Eve Wilson <eve@company.com>",
+      "timestamp": "2024-01-15T09:30:00Z",
+      "parents": ["f6e5d4c3b2a1987654321098765432109876dcba"],
+      "branch": "feature/rate-limiting",
+      "changes": [
+        {
+          "path": "/middleware/rate-limiter.json",
+          "type": "added",
+          "additions": 78,
+          "deletions": 0
+        },
+        {
+          "path": "/config/api.json",
+          "type": "modified",
+          "additions": 15,
+          "deletions": 3
+        }
+      ]
+    },
+    {
+      "hash": "9876543210abcdef0123456789abcdef01234567",
+      "message": "Fix memory leak in tree traversal",
+      "author": "Frank Miller <frank@company.com>",
+      "timestamp": "2024-01-15T13:10:00Z",
+      "parents": ["d4c3b2a1f6e5890123456789012345678901fedc"],
+      "branch": "hotfix/memory-leak",
+      "changes": [
+        {
+          "path": "/core/tree-walker.json",
+          "type": "modified",
+          "additions": 8,
+          "deletions": 12
+        },
+        {
+          "path": "/tests/performance.json",
+          "type": "added",
+          "additions": 35,
+          "deletions": 0
+        }
+      ]
+    }
+  ]
+}

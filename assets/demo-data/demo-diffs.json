@@ -1,0 +1,110 @@
+{
+  "title": "Demo Diff Examples",
+  "description": "Various diff scenarios showing different types of changes in Irmin stores",
+  "diffs": [
+    {
+      "id": "auth-implementation",
+      "from_commit": "f6e5d4c3b2a1987654321098765432109876dcba",
+      "to_commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "title": "Add User Authentication System",
+      "changes": [
+        {
+          "path": "/auth/users.json",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "{\n  \"users\": [\n    {\n      \"id\": \"user_001\",\n      \"username\": \"alice\",\n      \"email\": \"alice@company.com\",\n      \"role\": \"admin\",\n      \"created_at\": \"2024-01-15T14:30:00Z\",\n      \"last_login\": \"2024-01-15T14:30:00Z\",\n      \"permissions\": [\"read\", \"write\", \"admin\"]\n    },\n    {\n      \"id\": \"user_002\",\n      \"username\": \"bob\",\n      \"email\": \"bob@company.com\",\n      \"role\": \"user\",\n      \"created_at\": \"2024-01-15T10:15:00Z\",\n      \"last_login\": \"2024-01-15T12:45:00Z\",\n      \"permissions\": [\"read\", \"write\"]\n    }\n  ]\n}",
+          "additions": 18,
+          "deletions": 0
+        },
+        {
+          "path": "/config/auth.json",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "{\n  \"jwt_secret\": \"your-secret-key\",\n  \"session_timeout\": 3600,\n  \"password_policy\": {\n    \"min_length\": 8,\n    \"require_uppercase\": true,\n    \"require_numbers\": true,\n    \"require_symbols\": false\n  },\n  \"rate_limiting\": {\n    \"login_attempts\": 5,\n    \"lockout_duration\": 900\n  }\n}",
+          "additions": 12,
+          "deletions": 0
+        },
+        {
+          "path": "/config/app.json",
+          "change_type": "Modified",
+          "old_value": "{\n  \"app_name\": \"Irmin Demo\",\n  \"version\": \"1.0.0\",\n  \"environment\": \"development\"\n}",
+          "new_value": "{\n  \"app_name\": \"Irmin Demo\",\n  \"version\": \"1.1.0\",\n  \"environment\": \"development\",\n  \"features\": {\n    \"authentication\": true,\n    \"logging\": false\n  }\n}",
+          "additions": 5,
+          "deletions": 1
+        }
+      ]
+    },
+    {
+      "id": "database-config-update",
+      "from_commit": "b2a1f6e5d4c3456789012345678901234567cdef",
+      "to_commit": "f6e5d4c3b2a1987654321098765432109876dcba",
+      "title": "Update Database Configuration Schema",
+      "changes": [
+        {
+          "path": "/config/database.json",
+          "change_type": "Modified",
+          "old_value": "{\n  \"host\": \"localhost\",\n  \"port\": 5432,\n  \"database\": \"irmin_demo\"\n}",
+          "new_value": "{\n  \"host\": \"localhost\",\n  \"port\": 5432,\n  \"database\": \"irmin_demo\",\n  \"pool_size\": 10,\n  \"connection_timeout\": 30,\n  \"ssl_mode\": \"require\",\n  \"backup\": {\n    \"enabled\": true,\n    \"frequency\": \"daily\",\n    \"retention_days\": 30\n  }\n}",
+          "additions": 8,
+          "deletions": 0
+        },
+        {
+          "path": "/schemas/db-schema.json",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "{\n  \"tables\": [\n    {\n      \"name\": \"users\",\n      \"columns\": [\n        {\"name\": \"id\", \"type\": \"serial\", \"primary_key\": true},\n        {\"name\": \"username\", \"type\": \"varchar(50)\", \"unique\": true},\n        {\"name\": \"email\", \"type\": \"varchar(100)\", \"unique\": true},\n        {\"name\": \"created_at\", \"type\": \"timestamp\", \"default\": \"now()\"}\n      ]\n    },\n    {\n      \"name\": \"sessions\",\n      \"columns\": [\n        {\"name\": \"id\", \"type\": \"uuid\", \"primary_key\": true},\n        {\"name\": \"user_id\", \"type\": \"integer\", \"foreign_key\": \"users.id\"},\n        {\"name\": \"created_at\", \"type\": \"timestamp\", \"default\": \"now()\"},\n        {\"name\": \"expires_at\", \"type\": \"timestamp\"}\n      ]\n    }\n  ]\n}",
+          "additions": 18,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "id": "logging-system",
+      "from_commit": "a1b2c3d4e5f6789012345678901234567890abcd",
+      "to_commit": "d4c3b2a1f6e5890123456789012345678901fedc",
+      "title": "Add Comprehensive Logging System",
+      "changes": [
+        {
+          "path": "/config/logging.json",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "{\n  \"level\": \"info\",\n  \"format\": \"json\",\n  \"outputs\": [\n    {\n      \"type\": \"file\",\n      \"path\": \"/logs/app.log\",\n      \"max_size\": \"100MB\",\n      \"max_files\": 10\n    },\n    {\n      \"type\": \"file\",\n      \"path\": \"/logs/error.log\",\n      \"level\": \"error\",\n      \"max_size\": \"50MB\",\n      \"max_files\": 5\n    }\n  ]\n}",
+          "additions": 16,
+          "deletions": 0
+        },
+        {
+          "path": "/logs/app.log",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "2024-01-15T11:20:00Z INFO Application started successfully\n2024-01-15T11:20:01Z INFO Database connection established\n2024-01-15T11:20:01Z INFO Authentication system initialized\n2024-01-15T11:20:05Z INFO User alice logged in\n2024-01-15T11:25:00Z INFO Processing user request: GET /api/users\n2024-01-15T11:25:00Z INFO Request completed successfully in 45ms",
+          "additions": 6,
+          "deletions": 0
+        }
+      ]
+    },
+    {
+      "id": "memory-leak-fix",
+      "from_commit": "d4c3b2a1f6e5890123456789012345678901fedc",
+      "to_commit": "9876543210abcdef0123456789abcdef01234567",
+      "title": "Fix Memory Leak in Tree Traversal",
+      "changes": [
+        {
+          "path": "/core/tree-walker.json",
+          "change_type": "Modified",
+          "old_value": "{\n  \"traverse_method\": \"recursive\",\n  \"cache_nodes\": true,\n  \"max_depth\": 1000,\n  \"memory_limit\": \"unlimited\",\n  \"cleanup_policy\": \"never\"\n}",
+          "new_value": "{\n  \"traverse_method\": \"iterative\",\n  \"cache_nodes\": true,\n  \"max_depth\": 1000,\n  \"memory_limit\": \"500MB\",\n  \"cleanup_policy\": \"after_traversal\",\n  \"gc_threshold\": 0.8\n}",
+          "additions": 3,
+          "deletions": 2
+        },
+        {
+          "path": "/tests/performance.json",
+          "change_type": "Added",
+          "old_value": null,
+          "new_value": "{\n  \"memory_tests\": [\n    {\n      \"name\": \"tree_traversal_memory\",\n      \"description\": \"Test memory usage during tree traversal\",\n      \"max_memory_mb\": 500,\n      \"test_data_size\": \"10k_nodes\"\n    },\n    {\n      \"name\": \"gc_efficiency\",\n      \"description\": \"Test garbage collection efficiency\",\n      \"gc_frequency\": \"every_1000_nodes\"\n    }\n  ]\n}",
+          "additions": 12,
+          "deletions": 0
+        }
+      ]
+    }
+  ]
+}
