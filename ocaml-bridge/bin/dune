@@ -1,0 +1,4 @@
+(executable
+ (public_name irmin-bridge-cli)
+ (name main)
+ (libraries irmin_bridge cmdliner lwt.unix))

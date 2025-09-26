@@ -12,10 +12,13 @@ fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
-            irmin::commands::get_mock_tree,
-            irmin::commands::get_mock_commits,
+            irmin::commands::get_tree,
+            irmin::commands::get_commits,
+            irmin::commands::get_branches,
             irmin::commands::get_commit_diff,
             irmin::commands::search_keys,
+            irmin::commands::connect_to_irmin_store,
+            irmin::commands::check_irmin_availability,
             ui::commands::toggle_theme
         ])
         .setup(|app| {

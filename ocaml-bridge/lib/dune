@@ -1,0 +1,4 @@
+(library
+ (public_name irmin-bridge)
+ (name irmin_bridge)
+ (libraries irmin irmin-fs irmin-git yojson lwt cmdliner))
