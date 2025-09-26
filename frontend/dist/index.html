@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irmin View - Desktop UI Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">Irmin View</h1>
+                <span class="app-subtitle">Desktop UI Explorer</span>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="btn btn-icon" title="Toggle Theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button id="refresh-btn" class="btn btn-icon" title="Refresh">
+                    <span>🔄</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Navigation</h3>
+                    <nav class="nav-menu">
+                        <button class="nav-item active" data-view="tree">
+                            <span class="nav-icon">🌳</span>
+                            Tree Browser
+                        </button>
+                        <button class="nav-item" data-view="commits">
+                            <span class="nav-icon">📋</span>
+                            Commit History
+                        </button>
+                        <button class="nav-item" data-view="branches">
+                            <span class="nav-icon">🌿</span>
+                            Branches
+                        </button>
+                        <button class="nav-item" data-view="diff">
+                            <span class="nav-icon">📊</span>
+                            Diff Viewer
+                        </button>
+                    </nav>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Search</h3>
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search keys..." class="search-input">
+                        <button id="search-btn" class="btn btn-sm">Search</button>
+                    </div>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <section class="content">
+                <!-- Tree Browser View -->
+                <div id="tree-view" class="view active">
+                    <div class="view-header">
+                        <h2>Tree Browser</h2>
+                        <p class="view-description">Navigate through the Irmin store tree structure</p>
+                    </div>
+                    <div id="tree-container" class="tree-container">
+                        <div class="loading">Loading tree...</div>
+                    </div>
+                </div>
+
+                <!-- Commit History View -->
+                <div id="commits-view" class="view">
+                    <div class="view-header">
+                        <h2>Commit History</h2>
+                        <p class="view-description">Browse commit history and changes</p>
+                    </div>
+                    <div id="commits-container" class="commits-container">
+                        <div class="loading">Loading commits...</div>
+                    </div>
+                </div>
+
+                <!-- Branches View -->
+                <div id="branches-view" class="view">
+                    <div class="view-header">
+                        <h2>Branches</h2>
+                        <p class="view-description">View and manage branches</p>
+                    </div>
+                    <div id="branches-container" class="branches-container">
+                        <div class="loading">Loading branches...</div>
+                    </div>
+                </div>
+
+                <!-- Diff Viewer -->
+                <div id="diff-view" class="view">
+                    <div class="view-header">
+                        <h2>Diff Viewer</h2>
+                        <p class="view-description">Compare changes between commits</p>
+                    </div>
+                    <div class="diff-controls">
+                        <select id="from-commit" class="commit-select">
+                            <option value="">Select from commit...</option>
+                        </select>
+                        <span class="diff-arrow">→</span>
+                        <select id="to-commit" class="commit-select">
+                            <option value="">Select to commit...</option>
+                        </select>
+                        <button id="show-diff" class="btn">Show Diff</button>
+                    </div>
+                    <div id="diff-container" class="diff-container">
+                        <div class="empty-state">Select two commits to view diff</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="connection-status" class="status-item">
+                    <span class="status-dot connected"></span>
+                    Mock Data Connected
+                </span>
+            </div>
+            <div class="status-right">
+                <span id="item-count" class="status-item">0 items</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

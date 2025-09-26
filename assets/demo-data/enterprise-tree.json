@@ -1,0 +1,249 @@
+{
+  "title": "Enterprise Application Tree Structure",
+  "description": "A complex enterprise application structure demonstrating real-world Irmin usage scenarios",
+  "key": "/enterprise-app",
+  "value": null,
+  "node_type": "Directory",
+  "children": {
+    "config": {
+      "key": "config",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "database.json": {
+          "key": "database.json",
+          "value": "{\n  \"primary\": {\n    \"host\": \"db-primary.company.com\",\n    \"port\": 5432,\n    \"database\": \"enterprise_app\",\n    \"pool_size\": 50,\n    \"ssl_mode\": \"require\"\n  },\n  \"replica\": {\n    \"host\": \"db-replica.company.com\",\n    \"port\": 5432,\n    \"database\": \"enterprise_app\",\n    \"read_only\": true\n  }\n}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T10:30:00Z",
+            "size": 312,
+            "permissions": "600",
+            "owner": "app-admin",
+            "content_type": "application/json"
+          }
+        },
+        "redis.json": {
+          "key": "redis.json",
+          "value": "{\n  \"host\": \"redis.company.com\",\n  \"port\": 6379,\n  \"password\": \"encrypted:abc123\",\n  \"db\": 0,\n  \"max_connections\": 100,\n  \"timeout\": 5000\n}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T09:45:00Z",
+            "size": 156,
+            "permissions": "600",
+            "owner": "app-admin",
+            "content_type": "application/json"
+          }
+        },
+        "api.json": {
+          "key": "api.json",
+          "value": "{\n  \"base_url\": \"https://api.company.com\",\n  \"version\": \"v2\",\n  \"rate_limit\": {\n    \"requests_per_minute\": 1000,\n    \"burst_limit\": 100\n  },\n  \"cors\": {\n    \"allowed_origins\": [\"https://app.company.com\"],\n    \"allowed_methods\": [\"GET\", \"POST\", \"PUT\", \"DELETE\"]\n  }\n}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T11:15:00Z",
+            "size": 245,
+            "permissions": "644",
+            "owner": "app-admin",
+            "content_type": "application/json"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-15T11:15:00Z",
+        "size": null,
+        "permissions": "755",
+        "owner": "app-admin"
+      }
+    },
+    "users": {
+      "key": "users",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "admins": {
+          "key": "admins",
+          "value": null,
+          "node_type": "Directory",
+          "children": {
+            "alice.json": {
+              "key": "alice.json",
+              "value": "{\n  \"id\": \"admin_001\",\n  \"username\": \"alice.johnson\",\n  \"email\": \"alice.johnson@company.com\",\n  \"role\": \"super_admin\",\n  \"permissions\": [\"*\"],\n  \"created_at\": \"2024-01-10T08:00:00Z\",\n  \"last_login\": \"2024-01-15T14:30:00Z\",\n  \"mfa_enabled\": true,\n  \"department\": \"IT Operations\"\n}",
+              "node_type": "File",
+              "children": {},
+              "metadata": {
+                "last_modified": "2024-01-15T14:30:00Z",
+                "size": 298,
+                "permissions": "600",
+                "owner": "alice.johnson",
+                "content_type": "application/json"
+              }
+            },
+            "bob.json": {
+              "key": "bob.json",
+              "value": "{\n  \"id\": \"admin_002\",\n  \"username\": \"bob.smith\",\n  \"email\": \"bob.smith@company.com\",\n  \"role\": \"admin\",\n  \"permissions\": [\"users:read\", \"users:write\", \"config:read\"],\n  \"created_at\": \"2024-01-12T10:15:00Z\",\n  \"last_login\": \"2024-01-15T10:15:00Z\",\n  \"mfa_enabled\": true,\n  \"department\": \"Development\"\n}",
+              "node_type": "File",
+              "children": {},
+              "metadata": {
+                "last_modified": "2024-01-15T10:15:00Z",
+                "size": 312,
+                "permissions": "600",
+                "owner": "bob.smith",
+                "content_type": "application/json"
+              }
+            }
+          },
+          "metadata": {
+            "last_modified": "2024-01-15T14:30:00Z",
+            "size": null,
+            "permissions": "700",
+            "owner": "app-admin"
+          }
+        },
+        "employees": {
+          "key": "employees",
+          "value": null,
+          "node_type": "Directory",
+          "children": {
+            "charlie.json": {
+              "key": "charlie.json",
+              "value": "{\n  \"id\": \"emp_001\",\n  \"username\": \"charlie.brown\",\n  \"email\": \"charlie.brown@company.com\",\n  \"role\": \"user\",\n  \"permissions\": [\"dashboard:read\", \"reports:read\"],\n  \"created_at\": \"2024-01-14T16:45:00Z\",\n  \"last_login\": \"2024-01-15T08:30:00Z\",\n  \"mfa_enabled\": false,\n  \"department\": \"Marketing\"\n}",
+              "node_type": "File",
+              "children": {},
+              "metadata": {
+                "last_modified": "2024-01-15T08:30:00Z",
+                "size": 287,
+                "permissions": "644",
+                "owner": "charlie.brown",
+                "content_type": "application/json"
+              }
+            },
+            "diana.json": {
+              "key": "diana.json",
+              "value": "{\n  \"id\": \"emp_002\",\n  \"username\": \"diana.prince\",\n  \"email\": \"diana.prince@company.com\",\n  \"role\": \"user\",\n  \"permissions\": [\"dashboard:read\", \"analytics:read\", \"reports:write\"],\n  \"created_at\": \"2024-01-13T11:20:00Z\",\n  \"last_login\": \"2024-01-15T11:20:00Z\",\n  \"mfa_enabled\": true,\n  \"department\": \"Analytics\"\n}",
+              "node_type": "File",
+              "children": {},
+              "metadata": {
+                "last_modified": "2024-01-15T11:20:00Z",
+                "size": 321,
+                "permissions": "644",
+                "owner": "diana.prince",
+                "content_type": "application/json"
+              }
+            }
+          },
+          "metadata": {
+            "last_modified": "2024-01-15T11:20:00Z",
+            "size": null,
+            "permissions": "755",
+            "owner": "app-admin"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-15T14:30:00Z",
+        "size": null,
+        "permissions": "755",
+        "owner": "app-admin"
+      }
+    },
+    "services": {
+      "key": "services",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "authentication.json": {
+          "key": "authentication.json",
+          "value": "{\n  \"service_name\": \"auth-service\",\n  \"version\": \"2.1.0\",\n  \"status\": \"healthy\",\n  \"last_heartbeat\": \"2024-01-15T14:35:00Z\",\n  \"endpoints\": [\n    \"/auth/login\",\n    \"/auth/logout\",\n    \"/auth/refresh\",\n    \"/auth/validate\"\n  ],\n  \"health_check\": {\n    \"url\": \"/health\",\n    \"interval\": 30,\n    \"timeout\": 5\n  }\n}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T14:35:00Z",
+            "size": 342,
+            "permissions": "644",
+            "owner": "service-auth",
+            "content_type": "application/json"
+          }
+        },
+        "user-management.json": {
+          "key": "user-management.json",
+          "value": "{\n  \"service_name\": \"user-service\",\n  \"version\": \"1.8.2\",\n  \"status\": \"healthy\",\n  \"last_heartbeat\": \"2024-01-15T14:34:00Z\",\n  \"endpoints\": [\n    \"/users\",\n    \"/users/{id}\",\n    \"/users/{id}/permissions\"\n  ],\n  \"dependencies\": [\"auth-service\", \"database\"]\n}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T14:34:00Z",
+            "size": 278,
+            "permissions": "644",
+            "owner": "service-users",
+            "content_type": "application/json"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-15T14:35:00Z",
+        "size": null,
+        "permissions": "755",
+        "owner": "app-admin"
+      }
+    },
+    "logs": {
+      "key": "logs",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "application.log": {
+          "key": "application.log",
+          "value": "2024-01-15T14:35:00Z INFO [main] Application startup completed in 3.2s\n2024-01-15T14:35:01Z INFO [auth] Authentication service connected\n2024-01-15T14:35:01Z INFO [db] Database connection pool initialized (50 connections)\n2024-01-15T14:35:02Z INFO [redis] Redis connection established\n2024-01-15T14:35:05Z INFO [api] API server listening on port 8080\n2024-01-15T14:35:10Z INFO [user:alice.johnson] User logged in successfully\n2024-01-15T14:35:15Z INFO [api] GET /api/users/admins - 200 OK (45ms)\n2024-01-15T14:35:20Z WARN [rate-limiter] Rate limit approached for user alice.johnson (80/100 req/min)",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T14:35:20Z",
+            "size": 658,
+            "permissions": "644",
+            "owner": "app-logger",
+            "content_type": "text/plain"
+          }
+        },
+        "errors.log": {
+          "key": "errors.log",
+          "value": "2024-01-15T14:30:00Z ERROR [db] Connection timeout to replica database (attempt 1/3)\n2024-01-15T14:30:05Z ERROR [db] Connection timeout to replica database (attempt 2/3)\n2024-01-15T14:30:10Z WARN [db] Falling back to primary database for read operations\n2024-01-15T14:32:00Z ERROR [auth] Failed login attempt for user 'invalid.user' from IP 192.168.1.100\n2024-01-15T14:33:00Z ERROR [validation] Invalid JSON payload in POST /api/users request",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T14:33:00Z",
+            "size": 412,
+            "permissions": "644",
+            "owner": "app-logger",
+            "content_type": "text/plain"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-15T14:35:20Z",
+        "size": null,
+        "permissions": "755",
+        "owner": "app-logger"
+      }
+    },
+    "README.md": {
+      "key": "README.md",
+      "value": "# Enterprise Application Configuration\n\nThis Irmin store contains the configuration and runtime data for our enterprise application.\n\n## Structure\n\n- `config/` - Application configuration files\n- `users/` - User accounts and permissions\n- `services/` - Microservice configurations and health status\n- `logs/` - Application and error logs\n\n## Usage\n\nUse the Irmin View desktop application to explore and manage this data store.\n\n## Security\n\n- Sensitive configuration files have restricted permissions (600)\n- User data is encrypted at rest\n- All changes are audited and versioned\n\n## Backup\n\nThis store is automatically backed up every 4 hours to our secure backup location.",
+      "node_type": "File",
+      "children": {},
+      "metadata": {
+        "last_modified": "2024-01-14T16:45:00Z",
+        "size": 678,
+        "permissions": "644",
+        "owner": "app-admin",
+        "content_type": "text/markdown"
+      }
+    }
+  },
+  "metadata": {
+    "last_modified": "2024-01-15T14:35:20Z",
+    "size": null,
+    "permissions": "755",
+    "owner": "app-admin"
+  }
+}

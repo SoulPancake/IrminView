@@ -1,0 +1,113 @@
+{
+  "key": "/",
+  "value": null,
+  "node_type": "Directory",
+  "children": {
+    "config.json": {
+      "key": "config.json",
+      "value": "{\"database\": {\"host\": \"localhost\", \"port\": 5432}, \"cache\": {\"enabled\": true, \"ttl\": 3600}}",
+      "node_type": "File",
+      "children": {},
+      "metadata": {
+        "last_modified": "2024-01-15T10:00:00Z",
+        "size": 89,
+        "permissions": "644"
+      }
+    },
+    "users": {
+      "key": "users",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "alice.json": {
+          "key": "alice.json",
+          "value": "{\"name\": \"Alice Johnson\", \"email\": \"alice@example.com\", \"role\": \"admin\", \"created\": \"2024-01-10T09:00:00Z\"}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-12T14:30:00Z",
+            "size": 125,
+            "permissions": "644"
+          }
+        },
+        "bob.json": {
+          "key": "bob.json",
+          "value": "{\"name\": \"Bob Smith\", \"email\": \"bob@example.com\", \"role\": \"user\", \"created\": \"2024-01-11T11:15:00Z\"}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-13T16:45:00Z",
+            "size": 118,
+            "permissions": "644"
+          }
+        },
+        "charlie.json": {
+          "key": "charlie.json",
+          "value": "{\"name\": \"Charlie Brown\", \"email\": \"charlie@example.com\", \"role\": \"user\", \"created\": \"2024-01-14T08:20:00Z\"}",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-14T08:20:00Z",
+            "size": 124,
+            "permissions": "644"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-14T08:20:00Z",
+        "size": null,
+        "permissions": "755"
+      }
+    },
+    "logs": {
+      "key": "logs",
+      "value": null,
+      "node_type": "Directory",
+      "children": {
+        "app.log": {
+          "key": "app.log",
+          "value": "2024-01-15 10:00:00 INFO Application started\\n2024-01-15 10:05:00 INFO User alice logged in\\n2024-01-15 10:15:00 WARN Cache miss for key user:123\\n2024-01-15 10:20:00 ERROR Database connection timeout",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T10:20:00Z",
+            "size": 245,
+            "permissions": "644"
+          }
+        },
+        "error.log": {
+          "key": "error.log",
+          "value": "2024-01-15 10:20:00 ERROR Database connection timeout\\n2024-01-15 10:25:00 ERROR Failed to authenticate user",
+          "node_type": "File",
+          "children": {},
+          "metadata": {
+            "last_modified": "2024-01-15T10:25:00Z",
+            "size": 112,
+            "permissions": "644"
+          }
+        }
+      },
+      "metadata": {
+        "last_modified": "2024-01-15T10:25:00Z",
+        "size": null,
+        "permissions": "755"
+      }
+    },
+    "README.md": {
+      "key": "README.md",
+      "value": "# Irmin Store Sample\\n\\nThis is a sample Irmin store containing demo data for the IrminView desktop application.\\n\\n## Structure\\n\\n- `config.json` - Application configuration\\n- `users/` - User data directory\\n- `logs/` - Application logs\\n\\n## Usage\\n\\nExplore the tree structure, view commits, and analyze diffs using the IrminView interface.",
+      "node_type": "File",
+      "children": {},
+      "metadata": {
+        "last_modified": "2024-01-10T12:00:00Z",
+        "size": 387,
+        "permissions": "644"
+      }
+    }
+  },
+  "metadata": {
+    "last_modified": "2024-01-15T10:25:00Z",
+    "size": null,
+    "permissions": "755"
+  }
+}
