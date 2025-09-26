@@ -25,16 +25,5 @@
   "bundle": {
     "active": false
   },
-  "plugins": {
-    "shell": {
-      "open": true
-    },
-    "fs": {
-      "scope": ["$APPDATA", "$APPDATA/**"]
-    },
-    "dialog": {
-      "open": true,
-      "save": true
-    }
-  }
+  "plugins": {}
 }

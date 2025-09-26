@@ -1,4 +1,4 @@
-use super::{mock_data, integration, types::*};
+use super::{mock_data, integration, demo, types::*};
 use tauri::command;
 
 /// Get the tree structure for display (from real Irmin store)
@@ -8,8 +8,9 @@ pub async fn get_tree() -> Result<IrminNode, String> {
     match integration::get_irmin_tree(&config).await {
         Ok(tree) => Ok(tree),
         Err(e) => {
-            eprintln!("Failed to get tree from Irmin store: {}. Falling back to mock data.", e);
-            Ok(mock_data::generate_mock_tree())
+            eprintln!("Failed to get tree from Irmin store: {}. Using Irmin-like demo data.", e);
+            // Use demo data that represents what real Irmin data would look like
+            Ok(demo::generate_demo_irmin_tree())
         }
     }
 }
@@ -21,8 +22,8 @@ pub async fn get_commits() -> Result<Vec<IrminCommit>, String> {
     match integration::get_irmin_commits(&config).await {
         Ok(commits) => Ok(commits),
         Err(e) => {
-            eprintln!("Failed to get commits from Irmin store: {}. Falling back to mock data.", e);
-            Ok(mock_data::generate_mock_commits())
+            eprintln!("Failed to get commits from Irmin store: {}. Using Irmin-like demo data.", e);
+            Ok(demo::generate_demo_irmin_commits())
         }
     }
 }
@@ -34,8 +35,8 @@ pub async fn get_branches() -> Result<Vec<IrminBranch>, String> {
     match integration::get_irmin_branches(&config).await {
         Ok(branches) => Ok(branches),
         Err(e) => {
-            eprintln!("Failed to get branches from Irmin store: {}. Falling back to mock data.", e);
-            Ok(mock_data::generate_mock_branches())
+            eprintln!("Failed to get branches from Irmin store: {}. Using Irmin-like demo data.", e);
+            Ok(demo::generate_demo_irmin_branches())
         }
     }
 }
