@@ -1,109 +1,44 @@
-use super::{mock_data, integration, demo, types::*};
+use super::{integration, types::*};
 use tauri::command;
 
-/// Get the tree structure for display (from real Irmin store)
+/// Get the tree structure for display (from real Irmin store ONLY - NO FALLBACKS)
 #[command]
 pub async fn get_tree() -> Result<IrminNode, String> {
     let config = integration::IrminConfig::new();
-    match integration::get_irmin_tree(&config).await {
-        Ok(tree) => Ok(tree),
-        Err(e) => {
-            eprintln!("Failed to get tree from Irmin store: {}. Using Irmin-like demo data.", e);
-            // Use demo data that represents what real Irmin data would look like
-            Ok(demo::generate_demo_irmin_tree())
-        }
-    }
+    integration::get_irmin_tree(&config).await
+        .map_err(|e| format!("Failed to get tree from Irmin store: {}. Please ensure Irmin server is running.", e))
 }
 
-/// Get commits for the commit history view (from real Irmin store)
+/// Get commits for the commit history view (from real Irmin store ONLY - NO FALLBACKS)
 #[command]
 pub async fn get_commits() -> Result<Vec<IrminCommit>, String> {
     let config = integration::IrminConfig::new();
-    match integration::get_irmin_commits(&config).await {
-        Ok(commits) => Ok(commits),
-        Err(e) => {
-            eprintln!("Failed to get commits from Irmin store: {}. Using Irmin-like demo data.", e);
-            Ok(demo::generate_demo_irmin_commits())
-        }
-    }
+    integration::get_irmin_commits(&config).await
+        .map_err(|e| format!("Failed to get commits from Irmin store: {}. Please ensure Irmin server is running.", e))
 }
 
-/// Get branches (from real Irmin store)
+/// Get branches (from real Irmin store ONLY - NO FALLBACKS)
 #[command]
 pub async fn get_branches() -> Result<Vec<IrminBranch>, String> {
     let config = integration::IrminConfig::new();
-    match integration::get_irmin_branches(&config).await {
-        Ok(branches) => Ok(branches),
-        Err(e) => {
-            eprintln!("Failed to get branches from Irmin store: {}. Using Irmin-like demo data.", e);
-            Ok(demo::generate_demo_irmin_branches())
-        }
-    }
+    integration::get_irmin_branches(&config).await
+        .map_err(|e| format!("Failed to get branches from Irmin store: {}. Please ensure Irmin server is running.", e))
 }
 
-/// Get a diff between two commits (from real Irmin store)
+/// Get a diff between two commits (from real Irmin store ONLY - NO FALLBACKS)
 #[command]
 pub async fn get_commit_diff(from_commit: String, to_commit: String) -> Result<IrminDiff, String> {
     let config = integration::IrminConfig::new();
-    match integration::get_irmin_diff(&config, &from_commit, &to_commit).await {
-        Ok(diff) => Ok(diff),
-        Err(e) => {
-            eprintln!("Failed to get diff from Irmin store: {}. Falling back to mock data.", e);
-            Ok(mock_data::generate_mock_diff(&from_commit, &to_commit))
-        }
-    }
+    integration::get_irmin_diff(&config, &from_commit, &to_commit).await
+        .map_err(|e| format!("Failed to get diff from Irmin store: {}. Please ensure Irmin server is running.", e))
 }
 
-/// Search for keys in the tree (from real Irmin store)
+/// Search for keys in the tree (from real Irmin store ONLY - NO FALLBACKS)
 #[command]
 pub async fn search_keys(query: String) -> Result<Vec<SearchResult>, String> {
     let config = integration::IrminConfig::new();
-    match integration::search_irmin_keys(&config, &query).await {
-        Ok(results) => Ok(results),
-        Err(e) => {
-            eprintln!("Failed to search in Irmin store: {}. Falling back to mock data.", e);
-            let tree = mock_data::generate_mock_tree();
-            let results = search_tree_recursive(&tree, &query, "");
-            Ok(results)
-        }
-    }
-}
-
-/// Recursive function to search through the tree
-fn search_tree_recursive(node: &IrminNode, query: &str, current_path: &str) -> Vec<SearchResult> {
-    let mut results = Vec::new();
-    let path = if current_path.is_empty() {
-        node.key.clone()
-    } else {
-        format!("{}/{}", current_path, node.key)
-    };
-    
-    // Check if current node matches
-    if node.key.to_lowercase().contains(&query.to_lowercase()) {
-        let relevance_score = if node.key.to_lowercase() == query.to_lowercase() {
-            1.0
-        } else if node.key.to_lowercase().starts_with(&query.to_lowercase()) {
-            0.8
-        } else {
-            0.5
-        };
-        
-        results.push(SearchResult {
-            path: path.clone(),
-            node: node.clone(),
-            relevance_score,
-        });
-    }
-    
-    // Search in children
-    for child in node.children.values() {
-        results.extend(search_tree_recursive(child, query, &path));
-    }
-    
-    // Sort by relevance score (highest first)
-    results.sort_by(|a, b| b.relevance_score.partial_cmp(&a.relevance_score).unwrap());
-    
-    results
+    integration::search_irmin_keys(&config, &query).await
+        .map_err(|e| format!("Failed to search in Irmin store: {}. Please ensure Irmin server is running.", e))
 }
 
 /// Initialize or connect to an Irmin store
