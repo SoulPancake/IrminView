@@ -111,20 +111,23 @@ class IrminHandler(BaseHTTPRequestHandler):
         """Get branches from Git"""
         os.chdir(STORE_PATH)
         result = subprocess.run(
-            ['git', 'branch', '-v'],
+            ['git', 'branch', '--format=%(refname:short)|%(objectname:short)|%(committerdate:iso8601)'],
             capture_output=True, text=True
         )
         
         branches = []
-        for line in result.stdout.split('\n'):
+        for line in result.stdout.strip().split('\n'):
             if not line.strip():
                 continue
-            parts = line.strip().split()
+            parts = line.strip().split('|')
             if len(parts) < 2:
                 continue
             
-            name = parts[0].strip('*').strip()
-            head_commit = parts[1]
+            name = parts[0].strip()
+            if not name:  # Skip empty names
+                continue
+            head_commit = parts[1].strip()
+            last_updated = parts[2].strip() if len(parts) > 2 else ""
             
             # Get commit count
             count_result = subprocess.run(
@@ -135,13 +138,6 @@ class IrminHandler(BaseHTTPRequestHandler):
                 commit_count = int(count_result.stdout.strip())
             except ValueError:
                 commit_count = 0
-            
-            # Get last updated time
-            log_result = subprocess.run(
-                ['git', 'log', '-1', '--format=%aI', name],
-                capture_output=True, text=True
-            )
-            last_updated = log_result.stdout.strip()
             
             branches.append({
                 "name": name,
@@ -182,7 +178,7 @@ class IrminHandler(BaseHTTPRequestHandler):
                 node = {
                     "key": os.path.basename(file_path),
                     "value": content,
-                    "node_type": "file",
+                    "node_type": "File",  # Capitalized
                     "children": {},
                     "metadata": {
                         "last_modified": datetime.fromtimestamp(stat.st_mtime).isoformat() + 'Z',
@@ -221,10 +217,10 @@ class IrminHandler(BaseHTTPRequestHandler):
             file_path = parts[1]
             
             change_type = {
-                'A': 'added',
-                'M': 'modified',
-                'D': 'deleted'
-            }.get(status, 'modified')
+                'A': 'Added',
+                'M': 'Modified',
+                'D': 'Deleted'
+            }.get(status, 'Modified')
             
             # Get old and new content
             old_value = None
@@ -280,7 +276,7 @@ class IrminHandler(BaseHTTPRequestHandler):
         root = {
             "key": "root",
             "value": None,
-            "node_type": "directory",
+            "node_type": "Directory",  # Capitalized
             "children": {},
             "metadata": {
                 "last_modified": datetime.now().isoformat() + 'Z',
@@ -312,7 +308,7 @@ class IrminHandler(BaseHTTPRequestHandler):
                         current["children"][part] = {
                             "key": part,
                             "value": content,
-                            "node_type": "file",
+                            "node_type": "File",  # Capitalized
                             "children": {},
                             "metadata": {
                                 "last_modified": datetime.fromtimestamp(stat.st_mtime).isoformat() + 'Z',
@@ -325,7 +321,7 @@ class IrminHandler(BaseHTTPRequestHandler):
                         current["children"][part] = {
                             "key": part,
                             "value": None,
-                            "node_type": "directory",
+                            "node_type": "Directory",  # Capitalized
                             "children": {},
                             "metadata": {
                                 "last_modified": datetime.now().isoformat() + 'Z',
